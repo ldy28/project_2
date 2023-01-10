@@ -1,0 +1,77 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link id="pagestyle" href="/assets/css/material-kit.css?v=3.0.4"
+	rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/my.css">
+</head>
+
+<body>
+	<th:block th:fragment="Tophd">
+		<div class="container position-sticky z-index-sticky top-0">
+			<div class="row">
+				<div class="col-12">
+					<nav class="navbar navbar-expand-lg  blur border-radius-xl top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+						<div class="container-fluid px-0">
+							<a class="navbar-brand font-weight-bolder ms-sm-3"
+								th:href="@{/main.do}" title="미정계수" data-placement="bottom">UDF</a>
+							<div class="collapse navbar-collapse pt-3 pb-2 py-lg-0 w-100"
+								id="navigation">
+								<ul class="navbar-nav navbar-nav-hover ms-auto">
+									<li class="nav-item my-auto ms-3 ms-lg-0"><a
+										th:href="@{http://localhost:8088/cosmeticList.do}"
+										class="btn btn-sm  bg-gradient-primary-button  mb-0 me-1 mt-2 mt-md-0">제품</a>
+									</li>
+									<li class="nav-item my-auto ms-3 ms-lg-0"><a
+										th:href="@{http://localhost:8088/ingreList.do}"
+										class="btn btn-sm  bg-gradient-primary-button  mb-0 me-1 mt-2 mt-md-0">성분</a>
+									</li>
+									<li class="nav-item my-auto ms-3 ms-lg-0"><a
+										th:href="@{http://localhost:8088/boardList.do}"
+										class="btn btn-sm  bg-gradient-primary-button  mb-0 me-1 mt-2 mt-md-0">공지</a>
+									</li>
+									<li class="nav-item my-auto ms-3 ms-lg-0">
+										<div
+											th:if="${!#lists.isEmpty(session.mvo)} and ${session.mvo.memType == 'U'}">
+											<form class="form-inline" action="logout.do">
+												<a class="btn btn-default mb-0" th:text="|${session.mvo.memName}|"></a>
+												<button type="submit" class="btn btn-default mb-0">LogOut</button>
+												<a th:href="@{http://localhost:8088/memberUpdateView.do}"
+													class="btn btn-sm  bg-gradient-primary-button  mb-0 me-1 mt-2 mt-md-0">MyPage</a>
+											</form>
+										</div>
+										<div
+											th:if="${!#lists.isEmpty(session.mvo)} and ${session.mvo.memType == 'A'}">
+											<form class="form-inline" action="logout.do">
+												<a class="btn btn-default mb-0" th:text="|${session.mvo.memName}|"></a>
+												<label class="mb-0"></label>
+												<button type="submit" class="btn btn-default mb-0">LogOut</button>
+												<a th:href="@{http://localhost:8088/memberUpdateView.do}"
+													class="btn btn-sm  bg-gradient-primary-button  mb-0 me-1 mt-2 mt-md-0">MyPage</a>
+											</form>
+											<li class="nav-item my-auto ms-3 ms-lg-0">
+												<div
+													th:if="${!#lists.isEmpty(session.mvo)} and ${session.mvo.memType == 'A'}">
+													<a th:href="@{http://localhost:8088/memberList.do}">
+														<button class="btn btn-sm btn-info mb-0">Admin
+															page</button>
+													</a>
+												</div>
+											</li>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</th:block>
+</body>
+
+</html>

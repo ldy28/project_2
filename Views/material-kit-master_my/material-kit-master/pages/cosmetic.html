@@ -1,0 +1,377 @@
+<!--
+=========================================================
+* Material Kit 2 - v3.0.4
+=========================================================
+
+* Product Page:  https://www.creative-tim.com/product/material-kit 
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+    <title>Material Kit 2 by Creative Tim</title>
+    <!--     Fonts and icons     -->
+    <link id="pagestyle" href="../assets/css/material-kit.css?v=3.0.4" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/my.css">
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            // 페이지 번호를 클릭했을때 감지
+            // pagination 아래 a태그를 클릭 했을때
+
+            function checkedLi(arrayLi, flag) {
+                let inputName = ''
+                if (flag == 'char') {
+                    inputName = 'input[name=typeChar]'
+                } else if (flag == 'brand') {
+                    inputName = 'input[name=typeBrand]'
+                }
+                for (let index = 0; index < arrayLi.length; index++) {
+                    const element = arrayLi[index];
+                    if ($(element).text() == $(inputName).val()) {
+                        $(element).css("background-color", "red")
+                        break
+                    }
+                }
+            }
+
+            // 특징
+            let characterLi = ["#char1", "#char2", "#char3", "#char4", "#char5", "#char6", "#char7", "#char8", "#char9"]
+            checkedLi(characterLi, 'char')
+
+            // 브랜드
+            let brandLi = ['#brand1', '#brand2', '#brand3', '#brand4', '#brand5', '#brand6', '#brand7', '#brand8', '#brand9']
+            checkedLi(brandLi, 'brand')
+
+            $('.pagination-info a').click(function (e) {
+                // e 는 a태그 /a태그의 동작을 삭제함
+                e.preventDefault();
+                var page = $(this).attr('href');
+                document.frm.page.value = page; // name=frm 을 가지는 폼에 name=page인 value 값을 page 로 바꾼다
+                document.frm.submit(); // 전송
+            });
+
+            $('.filter_char a').click(function (e) {
+                console.log("filter_char click!!")
+                e.preventDefault();
+
+                if ($(this).css("background-color") == 'rgb(255, 0, 0)') {
+                    $('input[name=typeChar]').attr('value', null);
+                } else {
+                    var character = $(this).text();
+                    $('input[name=typeChar]').attr('value', character);
+                }
+
+                document.frm.page.value = 1;
+                document.frm.submit();
+            });
+
+            $('.filter_brand a').click(function (e) {
+                console.log("filter_brand click!!")
+                e.preventDefault();
+
+                if ($(this).css("background-color") == 'rgb(255, 0, 0)') {
+                    $('input[name=typeBrand]').attr('value', "");
+                } else {
+                    var brand = $(this).text();
+                    $('input[name=typeBrand]').attr('value', brand);
+                }
+
+                document.frm.page.value = 1;
+                document.frm.submit();
+            });
+
+            $('.filter_cate input').click(function (e) {
+                var cateid = $(this).attr("id");
+                var cate = $("label[for='" + cateid + "']").text();
+                console.log(cateid);
+
+                if ($(this).is(":checked") == true) {
+                    $('input[type="checkbox"]').prop('checked', false);
+                    $("input[name='" + cateid + "']").prop('checked', true);
+                }
+
+                if (cate == '평점 높은순') {
+
+                    if ($(this).is(":checked") == true) {
+                        $('input[name=typeStar]').attr('value', cate);
+                        $('input[name=typeReview]').attr('value', "");
+                        $('input[name=typeDate]').attr('value', "");
+                    } else if ($(this).is(":checked") == false) {
+                        $('input[name=typeStar]').attr('value', "");
+                    }
+                } else if (cate == '리뷰 많은순') {
+
+                    if ($(this).is(":checked") == true) {
+                        $('input[name=typeStar]').attr('value', "");
+                        $('input[name=typeReview]').attr('value', cate);
+                        $('input[name=typeDate]').attr('value', "");
+                    } else if ($(this).is(":checked") == false) {
+                        $('input[name=typeReview]').attr('value', "");
+                    }
+                } else if (cate == '등록 일자순') {
+
+                    if ($(this).is(":checked") == true) {
+                        $('input[name=typeStar]').attr('value', "");
+                        $('input[name=typeReview]').attr('value', "");
+                        $('input[name=typeDate]').attr('value', cate);
+                    } else if ($(this).is(":checked") == false) {
+                        $('input[name=typeDate]').attr('value', "")
+                    }
+                }
+
+                document.frm.page.value = 1;
+                document.frm.submit();
+
+            });
+
+            $('#search').click(function (e) {
+                e.preventDefault();
+                var search = $('input[name=search]').val();
+
+                $('input[name=keyword]').attr('value', search);
+                document.frm.page.value = 1;
+                document.frm.submit();
+            });
+
+            $('#searchBrand').click(function (e) {
+                e.preventDefault();
+                var search = $('input[name=searchBrand]').val();
+
+                $('input[name=typeBrand]').attr('value', search);
+                document.frm.page.value = 1;
+                document.frm.submit();
+            });
+
+            $(".productType button").click(function (e) {
+                var type = $(this).attr('id');
+
+                console.log(type);
+                $('input[name=productType]').attr('value', type);
+                document.frm.page.value = 1;
+                document.frm.submit();
+            });
+        });
+    </script>
+</head>
+
+<body class="blog-author bg-gray-200">
+    <!-- Navbar -->
+    <th:block th:replace="th/header/header :: Tophd"></th:block>
+    <!-- -------- START HEADER 4 w/ search book a ticket form ------- -->
+    <header>
+        <div class="page-header min-height-400 main-background-image" loading="lazy">
+            <div class="justify-content-center">
+
+                <div class="p-1-s bg-light-s rounded rounded-pill shadow-sm mb-4">
+                    <div class="input-group">
+                        <input type="search" placeholder="What're you searching for?" aria-describedby="button-addon1"
+                            class="form-control-s border-0 bg-light-s" name="search"
+                            th:value="${pageMaker.cri.keyword}">
+                        <div class="input-group-append">
+                            <button id="search" type="button" class="btn btn-link text-primary"><i
+                                    class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- <span class="mask bg-gradient-blue opacity-3">
+        <div class="row text-center py-2 mt-8">
+          <div class="col-4 mx-auto">
+            <div class="input-group input-group-dynamic search-bar-bg">
+              <span class="input-group-text"><i class="fas fa-search" aria-hidden="true"></i></span>
+              <input class="form-control " placeholder="Search" type="text">
+            </div>
+          </div>
+        </div>
+      </span> -->
+        </div>
+    </header>
+    <!-- -------- END HEADER 4 w/ search book a ticket form ------- -->
+    <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n8 mb-4">
+        <section class="py-3 ps">
+            <div class="container card py-5 ps-sm-5 px-sm-5">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="productType">
+                            <button type="button" class="btn bg-gradient-blue w-100 my-4 mb-2 bg-gradient-blue-button"
+                                id="S" th:onclick="mainIngre('S')">스킨</button>
+                            <button type="button" class="btn bg-gradient-blue w-100 my-4 mb-2 bg-gradient-blue-button"
+                                id="C" th:onclick="mainIngre('C')">크림</button>
+                            <button type="button" class="btn bg-gradient-blue w-100 my-4 mb-2 bg-gradient-blue-button"
+                                id="L" th:onclick="mainIngre('L')">로션</button>
+                        </div>
+                        <div class="filter_char">
+
+                            <table>
+                                <tr>
+                                    <td>특징</td>
+                                    <td><a id="char1" href="#" role="button">촉촉함</a></td>
+                                    <td><a id="char2" href="#" role="button">주름케어</a></td>
+                                    <td><a id="char3" href="#" role="button">각질케어</a></td>
+                                    <td><a id="char4" href="#" role="button">트러블케어</a></td>
+                                    <td><a id="char5" href="#" role="button">피지케어</a></td>
+                                    <td><a id="char6" href="#" role="button">모공케어</a></td>
+                                    <td><a id="char7" href="#" role="button">안티에이징</a></td>
+                                    <td><a id="char8" href="#" role="button">화이트닝</a></td>
+                                    <td><a id="char9" href="#" role="button">저자극</a></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="filter_brand">
+                            <table>
+
+                                <tr>
+                                    <td>브랜드</td>
+                                    <td><a id="brand1" href="#" type="button">이니스프리</a></td>
+                                    <td><a id="brand2" href="#" type="button">닥터지</a></td>
+                                    <td><a id="brand3" href="#" type="button">스킨푸드</a></td>
+                                    <td><a id="brand4" href="#" type="button">에뛰드</a></td>
+                                    <td><a id="brand5" href="#" type="button">더페이스샵</a></td>
+                                    <td><a id="brand6" href="#" type="button">마몽드</a></td>
+                                    <td><a id="brand7" href="#" type="button">셀퓨전씨</a></td>
+                                    <td><a id="brand8" href="#" type="button">네이처리퍼블릭</a></td>
+                                    <td><a id="brand9" href="#" type="button">설화수</a></td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="search" placeholder="What're you searching for?"
+                                                aria-describedby="button-addon1"
+                                                class="form-control-s border-0 bg-light-s" name="searchBrand"
+                                                th:value="${pageMaker.cri.typeBrand}">
+                                            <div class="input-group-append">
+                                                <button id="searchBrand" type="button"
+                                                    class="btn btn-link text-primary"><i
+                                                        class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+
+                        <div class="filter_cate">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="cate1" id="cate1"
+                                            th:checked="${!#strings.isEmpty(pageMaker.cri.typeStar)}" />
+                                        <label for="cate1">평점 높은순</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="cate2" id="cate2"
+                                            th:checked="${!#strings.isEmpty(pageMaker.cri.typeReview)}" />
+                                        <label for="cate2">리뷰 많은순</label>
+                                    </td>
+                                    <td><input type="checkbox" name="cate3" id="cate3"
+                                            th:checked="${!#strings.isEmpty(pageMaker.cri.typeDate)}" />
+                                        <label for="cate3">등록 일자순</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6" th:each="cosmetic : ${cosmeticList}">
+                        <div class="card card-plain">
+                            <div class="card-header p-0 position-relative">
+                                <a class="d-block blur-shadow-imag"
+                                    th:href="@{/cosDetail(productID=${cosmetic.productID})}"> <img
+                                        th:src="${cosmetic.productImg}" class="shadow border-radius-lg product-img"
+                                        loading="lazy">
+                                </a>
+                            </div>
+
+                            <div class="card-body px-0">
+                                <h5>
+                                    <a th:href="@{/cosDetail(productID=${cosmetic.productID})}"
+                                        class="text-dark font-weight-bold" th:text="${cosmetic.productNM}"></a>
+                                </h5>
+                                <p th:text="${cosmetic.productCharacter}"></p>
+                                <p th:text="${cosmetic.productBrand}"></p>
+                                <p th:text="${cosmetic.productStar}"></p>
+                                <a href="javascript:;" class="text-info text-sm icon-move-right">Read
+                                    More <i class="fas fa-arrow-right text-xs ms-1"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <form name="frm" th:action="@{/cosmeticList.do}" method="post">
+                    <!-- start pagination -->
+                    <ul class="pagination pagination-info justify-content-center mt-5">
+                        <li class="page-item" th:if="${pageMaker.prev}">
+                            <a class="page-link" th:href="@{${pageMaker.startPage-1}}" aria-label="Previous">
+                                <span aria-hidden="true">
+                                    <i class="ni ni-bold-left" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <th:block th:each="pageNum:${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+                            <li class="page-item active" th:if="${pageMaker.cri.page == pageNum}">
+                                <a class="page-link" th:href="@{${pageNum}}" th:text="${pageNum}"></a>
+                            </li>
+                            <li class="page-item" th:unless="${pageMaker.cri.page == pageNum}">
+                                <a class="page-link" th:href="@{${pageNum}}" th:text="${pageNum}"></a>
+                            </li>
+                        </th:block>
+                        <li class="page-item" th:if="${pageMaker.next}">
+                            <a class="page-link" th:href="@{${pageMaker.endPage+1}}" aria-label="Next">
+                                <span aria-hidden="true">
+                                    <i class="ni ni-bold-right" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- end pagination -->
+                    <input type="hidden" name="page" th:value="${pageMaker.cri.page}">
+                    <input type="hidden" name="typeChar" th:value="${pageMaker.cri.typeChar}">
+                    <input type="hidden" name="typeBrand" th:value="${pageMaker.cri.typeBrand}">
+                    <input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
+                    <input type="hidden" name="typeStar" th:value="${pageMaker.cri.typeStar}">
+                    <input type="hidden" name="typeReview" th:value="${pageMaker.cri.typeReview}">
+                    <input type="hidden" name="typeDate" th:value="${pageMaker.cri.typeDate}">
+                    <input type="hidden" name="productType" th:value="${pageMaker.cri.productType}">
+
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- END Blogs w/ 4 cards w/ image & text & link -->
+
+
+    <!-- -------- START FOOTER 5 w/ DARK BACKGROUND ------- -->
+    <!-- start footer -->
+    <th:block th:replace="th/header/footer :: Botft"></th:block>
+    <!-- end footer -->
+    <!-- -------- END FOOTER 5 w/ DARK BACKGROUND ------- -->
+    <!--   Core JS Files   -->
+    <script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <!--  Plugin for Parallax, full documentation here: https://github.com/wagerfield/parallax  -->
+    <script src="/assets/js/plugins/parallax.min.js"></script>
+    <!-- Control Center for Material UI Kit: parallax effects, scripts for the example pages etc -->
+    <!--  Google Maps Plugin    -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
+    <script src="/assets/js/material-kit.min.js?v=3.0.4" type="text/javascript"></script>
+</body>
+
+</html>

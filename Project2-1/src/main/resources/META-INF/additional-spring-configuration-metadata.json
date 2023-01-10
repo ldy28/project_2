@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "spring.mvc.thymeleaf.prefix",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mvc.thymeleaf.prefix'"
+  },
+  {
+    "name": "spring.mvc.thymeleaf.suffix",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mvc.thymeleaf.suffix'"
+  },
+  {
+    "name": "spring.mvc.thymeleaf.cache",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mvc.thymeleaf.cache'"
+  },
+  {
+    "name": "spring.mvc.thymeleaf.view-names",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mvc.thymeleaf.view-names'"
+  }
+]}

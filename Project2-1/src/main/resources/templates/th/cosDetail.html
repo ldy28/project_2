@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en" itemtype="http://schema.org/WebPage"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="apple-touch-icon" sizes="76x76"
+	href="../assets/img/apple-icon.png">
+<link rel="icon" type="image/png" href="/assets/img/favicon.png">
+<title>Material Kit 2 by Creative Tim</title>
+<!--     Fonts and icons     -->
+<link rel="stylesheet" type="text/css"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+<!-- Nucleo Icons -->
+<link href="/assets/css/nucleo-icons.css" rel="stylesheet" />
+<link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
+<!-- Font Awesome Icons -->
+<script src="https://kit.fontawesome.com/42d5adcbca.js"
+	crossorigin="anonymous"></script>
+<!-- Material Icons -->
+<link
+	href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+	rel="stylesheet">
+<!-- CSS Files -->
+<link id="pagestyle" href="/assets/css/material-kit.css?v=3.0.4"
+	rel="stylesheet" />
+<link id="" href="/assets/css/my.css" rel="stylesheet" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script th:inline="javascript">
+  
+  		var ingre = [[${json}]];
+  		var ewg = [[${ewg}]];
+  		var ewglist = ewg.split(",");
+  		var age = [[${cos.productAgeLikes}]];
+  		var agelist = age.split("|");
+  		console.log(agelist != 'None');
+  		var sex = [[${cos.productSexLikes}]];
+  		var sexlist = sex.split("|");
+  		console.log(sexlist)
+  		
+  		$(function(){
+  	  		var chartArea = document.getElementById('myChart').getContext('2d');
+  	  	 	// 차트를 생성한다. 
+  	  		var myChart = new Chart(chartArea, {
+  	  			plugins:[ChartDataLabels],
+  	  			data :  chartData,
+  	  			options : chartOptions
+  	  			
+  	  		})
+  	  	})
+  	  	
+  	  	var chartData = {
+  			labels : ['지성','건성','민감성'],
+  			datasets : [
+  				{
+  					type : 'bar',
+  					label : 'good',
+  					
+  					data : [ingre[1],ingre[5],ingre[9]],
+  					datalabels:{
+
+  				        color:'black',  
+  				        align: 'right',
+  			            anchor: 'end',
+  			            formatter: function (value, context) {
+  			                    var idx = context.dataIndex; // 각 데이터 인덱스
+	 			                if(value < 1){
+	 								return "";
+	 							}else{
+	 								return "  "+value;
+	 							}
+  			                 }
+
+
+  				    },
+  					backgroundColor : 'rgba(54, 162, 235, 0.2)',
+  					borderColor : 'rgba(54, 162, 235, 1)',
+  					borderWidth : 1
+  				},
+  				{
+  					type : 'bar',
+  					label : 'bad',
+  					data : [ingre[3],ingre[7],ingre[11]],
+  					datalabels:{
+			        color:'black', 
+			        align: 'right',
+		            anchor: 'end',
+		            font :{
+		            	size: 10
+		            },
+		            formatter: function (value, context) {
+	                    var idx = context.dataIndex; // 각 데이터 인덱스
+	                    if(value < 1){
+							return "";
+						}else{
+							return "  "+value;
+						}
+							
+	                 }
+		
+
+
+			    	},
+  					backgroundColor : 'rgba(255, 99, 132, 0.2)',
+  					borderColor : 'rgba(255, 99, 132, 1)',
+  					borderWidth : 1
+  				},
+
+  				
+  			]
+  		
+  		};
+  		var maxData = Math.max(ingre[3],ingre[5],ingre[7],ingre[9],ingre[11],ingre[1])
+  		var chartOptions = {
+  			scales :{
+  				x: {
+  					min : 0,
+	  				max : maxData+2,
+  					grid:{
+  						display: false,
+  						drawBorder: false
+  						
+  					},
+  					ticks:{
+  						display: false,
+  						
+  						
+  					}
+  				},
+  	  			y: {
+  	  				grid:{
+  	  					display: false,
+  	  					drawBorder: false
+  	  				},
+  	  				ticks:{
+  	  					font :{
+  	  						size : 15,
+  	  						weight : 'bold'
+  	  					}
+  	  				}
+  	  			}
+  	  		},
+			animation: {
+  			 	delay: (context) => {
+  		        var delay = 0;
+  		        if (context.type === 'data' && context.mode === 'default') {
+  		          delay = context.dataIndex * 1500 + context.datasetIndex * 100;
+  		        }
+  		        return delay;
+  		      	},
+  			 },	
+  			indexAxis: 'y',
+  			
+
+  		};
+  		
+  		$(function(){
+  	  		var chartArea2 = document.getElementById('myChart2').getContext('2d');
+  	  	 	// 차트를 생성한다. 
+  	  		var myChart2 = new Chart(chartArea2, {
+  	  			plugins:[ChartDataLabels],
+  	  			type : 'bar',
+  	  			data :  chartData2,
+  	  			options : chartOptions2
+  	  			
+  	  		})
+  	  	})
+  	  	
+  	  	var chartData2 = {
+  			labels : ['EWG 등급'],
+  			datasets : [
+  				{
+  					label : '등급 없음',
+  					data : [ewglist[3]],
+  					datalabels:{
+  						formatter: function (value, context) {
+							if(value < 1){
+								return "";
+							}
+		                  },
+	  			        color:'white',    
+	  			        align: 'center',
+	  		            anchor: 'center'
+  					},
+  					backgroundColor : '#bcbcbc',
+  					borderWidth : 1
+  				},	
+  				{
+  					
+  					label : '1~2 등급',
+  					data : [ewglist[0]],
+  					datalabels:{
+		        	color:'white',    
+		        	align: 'center',
+	            	anchor: 'center',
+  					},
+  					backgroundColor : '#00ccff',
+  					borderWidth: 1
+  					
+  				},
+  				{
+  					
+  					
+  					label : '3~6 등급',
+  					data : [ewglist[1]],
+  					datalabels:{
+						formatter: function (value, context) {
+							if(value < 1){
+								return "";
+							}
+		                  },         
+				        color:'white',                      
+				        align: 'center',
+			            anchor: 'center'
+			
+			
+			
+				    },
+  					backgroundColor : '#FFCC66',
+  					borderWidth: 1
+  					
+  				},
+				{
+  					
+  					label : '7~10 등급',
+  					data : [ewglist[2]],
+  					datalabels:{
+  						formatter: function (value, context) {
+		                    
+							if(value < 1){
+								return "";
+							}
+		                    // 출력 텍스트
+		                    
+		                  },
+		                  color:'white',                      // 배경색을 어떻게 세팅했냐에 따라 적절히..
+			                // pixel 단위이고, 수치로 입력
+					        align: 'center',
+				            anchor: 'center'
+				      
+	
+			    	},
+  					backgroundColor : '#FF0000',
+  					borderWidth: 1,
+  					
+  					
+  				},
+
+  				
+  			]
+  		
+  		};
+  		
+  		var chartOptions2 = {
+  			responsive: false,
+			animation: {
+  			 	delay: (context) => {
+  		        var delay = 0;
+  		        if (context.type === 'data' && context.mode === 'default') {
+  		          delay = context.dataIndex * 2000 + context.datasetIndex * 200;
+  		        }
+  		        return delay;
+  		      	},
+  			 },	
+  			responsive:false,
+  			
+  			scales : {
+  				x: {
+  					stacked : true,
+  					display : false,
+  				},
+  				y: {
+  					stacked : true,
+  					display : false,
+  				},
+  			},
+  			indexAxis : 'y',
+  			plugins : {
+  				legend : {
+  					display : true,
+  					
+  				},
+  				title: {
+  	                display: true,
+  	                text: '성분 구성'
+  	            }
+  				
+  				
+  			}
+  		}
+  		
+  		
+  		// Age 차트
+  		
+  		if(agelist != 'None'){
+  			$(function(){
+  	  	  		var chartArea3 = document.getElementById('myChart3').getContext('2d');
+  	  	  	 	// 차트를 생성한다. 
+  	  	  		var myChart3 = new Chart(chartArea3, {
+  	  	  			type : 'bar',
+  	  	  			plugins:[ChartDataLabels],
+  	  	  			data :  chartData3,
+  	  	  			options : chartOptions3
+  	  	  			
+  	  	  		})
+  	  	  	})
+  	  	  	
+  	  	  	var chartData3 = {
+  	  			labels : ['10대','20대','30대','40대','50대','60대'],
+  	  			datasets : [
+  	  				{
+  	  					
+  	  					
+  	  					
+  	  					data : [agelist[0], agelist[1], agelist[2], agelist[3], agelist[4], agelist[5]],
+  	  					datalabels:{
+		                 // 너무 흐리다 싶어서 잘 보이도록 완전히 검게..
+					        color:'black',                      // 배경색을 어떻게 세팅했냐에 따라 적절히..
+					                // pixel 단위이고, 수치로 입력
+					        align: 'top',
+				            anchor: 'end',
+				            formatter: function (value, context) {
+				                    var idx = context.dataIndex; // 각 데이터 인덱스
+									if(value > 1){
+										return value + '%';
+									}else{
+										return "";
+									}
+				                    // 출력 텍스트
+				                    
+				                  }
+				
+				
+					    },
+  	  					backgroundColor : [
+  	  						'rgba(255, 99, 132, 0.2)',
+  	  						'rgba(54, 162, 235, 0.2)',
+  	  						'rgba(255, 206, 86, 0.2)',
+	  	  					'rgba(75, 192, 192, 0.2)',
+	  	  					'rgba(153, 102, 255, 0.2)',
+	  	  					'rgba(255, 159, 64, 0.2)'
+  	  						
+  	  					],
+  	  					borderColor :  [
+  	  						'rgba(255, 99, 132, 1)',
+  	  						'rgba(54, 162, 235, 1)',
+  	  						'rgba(255, 206, 86, 1)',
+	  	  					'rgba(75, 192, 192, 1)',
+	  	  					'rgba(153, 102, 255, 1)',
+	  	  					'rgba(255, 159, 64, 1)'
+  	  						
+  	  					],
+  	  					borderWidth : 1,
+  	  					borderRadius: 5,
+  	  					
+  	  				}
+
+  	  				
+  	  			]
+  	  		
+  	  		};
+  	  		
+  	  		var chartOptions3 = {
+  	  			scales :{
+  	  				y:{
+  	  					grid:{
+  	  						display: false,
+  	  						drawBorder: false
+  	  					},
+  	  					ticks :{
+  	  						display: false
+  	  					}
+  	  				},
+  	  				x:{
+  	  					grid :{
+  	  						display: false
+  	  					},
+  	  					ticks:{
+  	  						font : {
+  	  							weight : 'bold'
+  	  						}
+  	  					}
+  	  				}
+  	  				
+  	  			},
+  	  	    
+  	  			 animation: {
+  	  			 	delay: (context) => {
+  	  		        var delay = 0;
+  	  		        if (context.type === 'data' && context.mode === 'default') {
+  	  		          delay = context.dataIndex * 300 + context.datasetIndex * 100;
+  	  		        }
+  	  		        return delay;
+  	  		      	},
+  	  			 },	
+  	  			plugins: {
+  	              legend: {
+  	                  display: false
+  	                  
+  	              },
+  	            	title: {
+  	                display: true,
+  	                text: '연령별 인기도'
+  	            }
+  	          }
+  	  		};
+  		}
+  		
+  		if(sexlist != 'None'){
+  			$(function(){
+  	  	  		var chartArea4 = document.getElementById('myChart4').getContext('2d');
+  	  	  	 	// 차트를 생성한다. 
+  	  	  		var myChart4 = new Chart(chartArea4, {
+  	  	  			type : 'doughnut',
+  	  	  			plugins:[ChartDataLabels],
+  	  	  			data :  chartData4,
+  	  	  			options : chartOptions4
+  	  	  			
+  	  	  		})
+  	  	  	})
+  	  	  	
+  	  	  	var chartData4 = {
+  	  			labels : ['여성','남성'],
+  	  			datasets : [
+  	  				{
+  	  					
+  	  					label : '성별 인기도',
+  	  					
+  	  					data : [sexlist[0], sexlist[1]],
+  	  					datalabels:{
+		                 // 너무 흐리다 싶어서 잘 보이도록 완전히 검게..
+					        color:'white',                      // 배경색을 어떻게 세팅했냐에 따라 적절히..
+					                // pixel 단위이고, 수치로 입력
+					        align: 'center',
+				            anchor: 'center',
+				            formatter: function (value, context) {
+				                    var idx = context.dataIndex; // 각 데이터 인덱스
+
+				                    // 출력 텍스트
+				                    return value + '%';
+				                  }
+				
+				
+					    },
+/*   	  					backgroundColor : ['#ff3300','#33ccff'], */
+  	  					backgroundColor : [
+  	  						'rgba(255, 51, 0, 0.8)',
+  	  						'rgba(50, 204, 255, 0.8)'],
+  	  					borderWidth : 2
+  	  				}
+
+  	  				
+  	  			]
+  	  		
+  	  		};
+  	  		
+  	  		var chartOptions4 = {
+  	  			animation: {
+  	  			 	delay: (context) => {
+  	  		        var delay = 0;
+  	  		        if (context.type === 'data' && context.mode === 'default') {
+  	  		          delay = context.dataIndex * 600 + context.datasetIndex * 200;
+  	  		        }
+  	  		        return delay;
+  	  		      	},
+  	  			 },	
+  	  		};
+  		}
+  		
+  	
+  </script>
+  
+  <style type="text/css">
+.ewgImage {
+	position: relative;
+	justify-content: center;
+}
+
+.ewgImage .ewgText {
+	position: absolute;
+	top: 50%;
+	left: 49%;
+	transform: translate(-50%, -50%);
+	color: white;
+	text-align: center;
+	font-size: small;
+}
+</style>
+</head>
+
+<body class="blog-author bg-gray-200">
+	<!-- Navbar -->
+	<th:block th:replace="th/header/header :: Tophd"></th:block>
+	<!-- -------- START HEADER 4 w/ search book a ticket form ------- -->
+	<header class="header-2">
+		<div class="page-header min-vh-45 relative main-background-image">
+			<span class="mask bg-gradient-blue opacity-4"></span>
+		</div>
+	</header>
+	<!-- -------- END HEADER 4 w/ search book a ticket form ------- -->
+	<div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n10 mb-4 ">
+		<section class="mt-2 mb-4">
+			<div class="card card-body-b">
+				<div class="card card-body-i">
+					<h4 class="text-center mt-2" th:text="${cos.productNM}"></h4>
+				</div>
+			</div>
+		</section>
+		<!-- END Testimonials w/ user image & text & info -->
+		<!-- START Blogs w/ 4 cards w/ image & text & link -->
+		<section class="py-3">
+			<!-- <div class="col-xxl-5 col-md-6 mb-4"> -->
+			<div class="row">
+				<div class="col-8">
+					<div class="card card-body-b">
+						<div class="row">
+							<div class="col-5">
+								<h3 class="card-title">Info</h3>
+								<a class="card-body-i d-block image-product text-center"
+									style="height: 385px;"><img
+									th:src="${cos.productImg}"
+									class="shadow border-radius-lg product-img mt-4" width="400px"
+									height="430px" loading="lazy"> </a>
+							</div>
+							<div class="col-7">
+								<h3 class="card-title">&nbsp</h3>
+								<div class="card-body-i row">
+									<div class="col-3 card-body-info text-center mb-3">
+										<h6 class="card-body-info-center">제조사</h6>
+									</div>
+									<div class="col-9 card-body-info text-center mb-3">
+										<h6 class="card-body-info-center"
+											th:text="${cos.productMaker}"></h6>
+									</div>
+									<div class="col-3 card-body-info text-center mb-3">
+										<h6 class="card-body-info-center">브랜드</h6>
+									</div>
+									<div class="col-9 card-body-info text-center mb-3">
+										<h6 class="card-body-info-center"
+											th:text="${cos.productBrand}"></h6>
+									</div>
+									<div class="col-3 card-body-info text-center mb-3">
+										<h6 class="card-body-info-center">특징</h6>
+									</div>
+									<div class="col-9 card-body-info text-center mb-3">
+										<h6 class="card-body-info-center"
+											th:text="${#strings.replace(cos.productCharacter,'|',',')}"></h6>
+									</div>
+									<div class="col-3 card-body-info text-center mb-3">
+										<h6 class="card-body-info-center">평점</h6>
+									</div>
+									<div class="col-9 card-body-info text-center mb-3">
+										
+										<h6 class="card-body-info-center" th:text="${cos.productStar}"></h6>
+									</div>
+									<div class="col-3 card-body-info text-center mb-3">
+										<h6 class="card-body-info-center">등록일자</h6>
+									</div>
+									<div class="col-9 card-body-info text-center mb-3">
+										<h6 class="card-body-info-center" th:text="${cos.productDate}"></h6>
+									</div>
+									<div class="col-3 card-body-info text-center mb-3">
+										<h6 class="card-body-info-center">리뷰개수</h6>
+									</div>
+									<div class="col-9 card-body-info text-center mb-3">
+										<h6 class="card-body-info-center"
+											th:text="${cos.productReviewCnt}"></h6>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-4">
+					<div class="card card-body-b" style="height: 530px">
+						<h4 class="card-title">전성분</h4>
+						<div class="card-body-i row overflow-auto">
+							<div class="col-3 card-body-info text-center mb-3">
+								<h6 class="card-body-info-center">Skindeep</h6>
+							</div>
+							<div class="col-7 card-body-info text-center mb-3">
+								<h6 class="card-body-info-center">성분명</h6>
+							</div>
+							<th:block th:each="pro : ${proList}">
+								<div class="col-3 card-body-info text-center mb-3"><div class="ewgImage">
+									<th:block
+										th:switch="${#strings.substring(pro.productEwgScore, 0, 1)}">
+										<img th:case='N' alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/JS.png" width="30" height="30">
+										<img th:case="1" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg1.png" width="30" height="30">
+										<img th:case="2" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg1.png" width="30" height="30">
+										<img th:case="3" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg2.png" width="30" height="30">
+										<img th:case="4" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg2.png" width="30" height="30">
+										<img th:case="5" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg2.png" width="30" height="30">
+										<img th:case="6" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg2.png" width="30" height="30">
+										<img th:case="7" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg3.png" width="30" height="30">
+										<img th:case="8" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg3.png" width="30" height="30">
+										<img th:case="9" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg3.png" width="30" height="30">
+										<img th:case="10" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg3.png" width="30" height="30">
+									</th:block>
+									<!-- 									<h6 class="card-body-info-center ewgText" th:text="${ingre.ingreEwg}"></h6> -->
+									<div>
+										<h6 class="ewgText" th:text="${pro.productEwgScore}"
+											th:if="${!pro.productEwgScore.toString().equals('None')}"></h6>
+									</div>
+									</div>
+									<!-- <h6 class="card-body-info-center" th:if="${pro.productEwgScore == '0'}"
+										th:text="'X'"></h6>
+									<h6 class="card-body-info-center" th:unless="${pro.productEwgScore == '0'}"
+										th:text="${pro.productEwgScore}"></h6> -->
+								</div>
+								<!-- 성분명 -->
+
+								<div class="col-9 card-body-info text-center mb-3">
+									<h6 class="card-body-info-center" th:text="${pro.productIngredient}"></h6>
+								</div>
+							</th:block>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mt-3">
+				<div class="col-6">
+					<div class="card card-body-b">
+						<h4 class="card-title">성분구성</h4>
+						<div class="card-body-i">
+							<canvas style="padding-left: 40px;" class="text-center"
+								id="myChart2" width="600" height="100"></canvas>
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="card card-body-b">
+						<h4 class="card-title">피부타입별</h4>
+						<div class="card-body-i">
+							<canvas style="padding-left: 40px;" id="myChart" width="700"
+								height="220"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card card-body-b mt-3">
+				<h4 class="card-title">연령별 인기도</h4>
+				<div class="card-body-i">
+					<div class="row">
+						<!--차트가 그려질 부분-->
+						<div class="col-8">
+							<canvas id="myChart3" width="400" height="200"></canvas>
+						</div>
+						<div class="col-4">
+							<canvas id="myChart4" width="600" height="200"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xxl-7 col-md-6 mb-4"></div>
+			</div>
+		</section>
+	</div>
+
+	<!-- </div> -->
+	<!-- <div>
+		<img th:src="@{${'/assets/img/productWord/'+ cos.productID +'.png'}}" />
+	</div> -->
+
+	<!-- END Blogs w/ 4 cards w/ image & text & link -->
+	<!-- -------- START FOOTER 5 w/ DARK BACKGROUND ------- -->
+	<footer class="footer pt-5 mt-5">
+		<div class="container">
+			<div class=" row">
+				<div class="col-md-3 mb-4 ms-auto">
+					<div>
+						<a href=""> <img src="" class="mb-3 footer-logo"
+							alt="main_logo">
+						</a>
+						<h6 class="font-weight-bolder mb-4">미정계수</h6>
+					</div>
+					<div>
+						<ul class="d-flex flex-row ms-n3 nav">
+							<li class="nav-item"><a class="nav-link pe-1" href=""
+								target="_blank"> <i
+									class="fab fa-facebook text-lg opacity-8"></i>
+							</a></li>
+							<li class="nav-item"><a class="nav-link pe-1" href=""
+								target="_blank"> <i class="fab fa-twitter text-lg opacity-8"></i>
+							</a></li>
+							<li class="nav-item"><a class="nav-link pe-1" href=""
+								target="_blank"> <i
+									class="fab fa-dribbble text-lg opacity-8"></i>
+							</a></li>
+							<li class="nav-item"><a class="nav-link pe-1" href=""
+								target="_blank"> <i class="fab fa-github text-lg opacity-8"></i>
+							</a></li>
+							<li class="nav-item"><a class="nav-link pe-1" href=""
+								target="_blank"> <i class="fab fa-youtube text-lg opacity-8"></i>
+							</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-2 col-sm-6 col-6 mb-4">
+					<div>
+						<h6 class="text-sm">Company</h6>
+						<ul class="flex-column ms-n3 nav">
+							<li class="nav-item"><a class="nav-link" href=""
+								target="_blank"> About Us </a></li>
+							<li class="nav-item"><a class="nav-link" href=""
+								target="_blank"> Freebies </a></li>
+							<li class="nav-item"><a class="nav-link" href=""
+								target="_blank"> Premium Tools </a></li>
+							<li class="nav-item"><a class="nav-link" href=""
+								target="_blank"> Blog </a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-2 col-sm-6 col-6 mb-4">
+					<div>
+						<h6 class="text-sm">Resources</h6>
+						<ul class="flex-column ms-n3 nav">
+							<li class="nav-item"><a class="nav-link" href=""
+								target="_blank"> Illustrations </a></li>
+							<li class="nav-item"><a class="nav-link" href=""
+								target="_blank"> Bits & Snippets </a></li>
+							<li class="nav-item"><a class="nav-link" href=""
+								target="_blank"> Affiliate Program </a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-2 col-sm-6 col-6 mb-4">
+					<div>
+						<h6 class="text-sm">Help & Support</h6>
+						<ul class="flex-column ms-n3 nav">
+							<li class="nav-item"><a class="nav-link" href=""
+								target="_blank"> Contact Us </a></li>
+							<li class="nav-item"><a class="nav-link" href=""
+								target="_blank"> Knowledge Center </a></li>
+							<li class="nav-item"><a class="nav-link" href=""
+								target="_blank"> Custom Development </a></li>
+							<li class="nav-item"><a class="nav-link" href=""
+								target="_blank"> Sponsorships </a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-2 col-sm-6 col-6 mb-4 me-auto">
+					<div>
+						<h6 class="text-sm">Legal</h6>
+						<ul class="flex-column ms-n3 nav">
+							<li class="nav-item"><a class="nav-link" href=""
+								target="_blank"> Terms & Conditions </a></li>
+							<li class="nav-item"><a class="nav-link" href=""
+								target="_blank"> Privacy Policy </a></li>
+							<li class="nav-item"><a class="nav-link" href=""
+								target="_blank"> Licenses (EULA) </a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-12">
+					<div class="text-center">
+						<p class="text-dark my-4 text-sm font-weight-normal">
+							All rights reserved. Copyright ©
+							<script>document.write(new Date().getFullYear())</script>
+							🥕 <a href="" target="_blank">Some Where</a>.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- -------- END FOOTER 5 w/ DARK BACKGROUND ------- -->
+	<!--   Core JS Files   -->
+	<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+	<script src="/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+	<script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+	<!--  Plugin for Parallax, full documentation here: https://github.com/wagerfield/parallax  -->
+	<script src="/assets/js/plugins/parallax.min.js"></script>
+	<!-- Control Center for Material UI Kit: parallax effects, scripts for the example pages etc -->
+	<!--  Google Maps Plugin    -->
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
+	<script src="/assets/js/material-kit.min.js?v=3.0.4"
+		type="text/javascript"></script>
+</body>
+<script
+	src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+
+</html>

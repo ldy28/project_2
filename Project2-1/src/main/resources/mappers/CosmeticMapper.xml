@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CosmeticMapper">
+	<!-- 게시판 -->
+   	<select id="list" resultType="com.example.entity.Board" parameterType="com.example.entity.Criteria">
+   		select * from board order by boardSeq DESC limit #{pageStart}, #{perPageNum}
+   	</select>
+   	<select id="countBoard" resultType="int">
+   		select count(*) from board
+   	</select>
+   	
+   	<!-- 성분 검색페이지 -->
+   	<select id="ingreList" resultType="com.example.entity.Ingredient" parameterType="com.example.entity.Criteria">
+   		select * from ingredient 
+   		<trim prefix="where" prefixOverrides="AND">
+	   		<if test="keyword!=null &amp;&amp; !keyword.equals('')">
+	   			AND ingreName like CONCAT('%',#{keyword},'%')
+	   		</if>
+	   		
+ 	   		<!--<if test="typeEwg!=null &amp;&amp; !typeEwg.equals('')">
+	   			AND ingreEwg like CONCAT(#{typeEwg},'%')
+	   		</if>
+	   		 -->
+	   		<choose>
+	   			<when test="typeEwg == '안전'">
+	   				AND (ingreEwg LIKE '1%'
+	   				OR ingreEwg LIKE '2%')
+	   			</when>
+	   			<when test="typeEwg == '보통'">
+	   				AND (ingreEwg like '3%'
+	   				OR ingreEwg like '4%'
+	   				OR ingreEwg like '5%'
+	   				OR ingreEwg like '6%')
+	   			</when>
+	   			<when test="typeEwg == '위험'">
+	   				AND (ingreEwg like '7%'
+	   				OR ingreEwg like '8%'
+	   				OR ingreEwg like '9%'
+	   				OR ingreEwg like '10%')
+	   			</when>
+	   		</choose>
+	   		
+	   		<choose>
+	   			<when test="skintype == '지성'">
+	   				AND ingreOilScore = 1
+	   			</when>
+	   			<when test="skintype == '건성'">
+	   				AND ingreDryScore = 1
+	   			</when>
+	   			<when test="skintype == '민감성'">
+	   				AND ingreSensitiveScore = 1
+	   			</when>
+	   		</choose>
+   		</trim>
+   		order by LENGTH(ingreProduct) DESC limit #{pageStart}, #{perPageNum}
+   	</select>
+   	
+   	<select id="countIngre" resultType="int" parameterType="com.example.entity.Criteria">
+   		select count(*) from ingredient
+   		<trim prefix="where" prefixOverrides="AND">
+	   		<if test="keyword!=null &amp;&amp; !keyword.equals('')">
+	   			AND ingreName like CONCAT('%',#{keyword},'%')
+	   		</if>
+	   		
+<!-- 	   		<if test="typeEwg!=null &amp;&amp; !typeEwg.equals('')">
+	   			AND ingreEwg like CONCAT(#{typeEwg},'%')
+	   		</if> -->
+	   		<choose>
+	   			<when test="typeEwg == '안전'">
+	   				AND (ingreEwg LIKE '1%'
+	   				OR ingreEwg LIKE '2%')
+	   			</when>
+	   			<when test="typeEwg == '보통'">
+	   				AND (ingreEwg like '3%'
+	   				OR ingreEwg like '4%'
+	   				OR ingreEwg like '5%'
+	   				OR ingreEwg like '6%')
+	   			</when>
+	   			<when test="typeEwg == '위험'">
+	   				AND (ingreEwg like '7%'
+	   				OR ingreEwg like '8%'
+	   				OR ingreEwg like '9%'
+	   				OR ingreEwg like '10%')
+	   			</when>
+	   		</choose>
+	   		
+	   		<choose>
+	   			<when test="skintype == '지성'">
+	   				AND ingreOilScore = 1
+	   			</when>
+	   			<when test="skintype == '건성'">
+	   				AND ingreDryScore = 1
+	   			</when>
+	   			<when test="skintype == '민감성'">
+	   				AND ingreSensitiveScore = 1
+	   			</when>
+	   		</choose>
+   		</trim>
+   	</select>
+   	
+   	
+   	<!-- 화장품 검색페이지 -->
+   	<select id="cosmeticList" resultType="com.example.entity.Cosmetic" parameterType="com.example.entity.Criteria">
+   		select * from cosmetic
+   		<trim prefix="where" prefixOverrides="AND">
+	   		<if test="keyword!=null &amp;&amp; !keyword.equals('')">
+	   			AND productNM like CONCAT('%',#{keyword},'%')
+	   		</if>
+	   		<if test="typeChar!=null &amp;&amp; !typeChar.equals('')">
+	   			AND productCharacter like CONCAT('%',#{typeChar},'%')
+	   		</if>
+	   		<if test="typeBrand!=null &amp;&amp; !typeBrand.equals('')">
+	   			AND productBrand like CONCAT('%',#{typeBrand},'%')
+	   		</if>
+	   		<if test="productType!=null &amp;&amp; !productType.equals('')">
+	   			AND productType = #{productType}
+	   		</if>
+	   		
+   		</trim>
+   		
+   		<choose>
+   			<when test="typeStar!=null &amp;&amp; !typeStar.equals('')">
+	   			order by productStar DESC
+	   		</when>
+	   		<when test="typeReview!=null &amp;&amp; !typeReview.equals('')">
+	   			order by productReviewCnt DESC
+	   		</when>
+	   		<when test="typeDate!=null &amp;&amp; !typeDate.equals('')">
+	   			order by productDate DESC
+	   		</when>
+	   		<otherwise>
+   				order by productReviewCnt DESC
+   			</otherwise>
+   		</choose>
+   		
+   		limit #{pageStart}, #{perPageNum}
+   	</select>
+   	
+   	<select id="countCosmetic" resultType="int" parameterType="com.example.entity.Criteria">
+   		select count(*) from cosmetic
+   		<trim prefix="where" prefixOverrides="AND">
+	   		<if test="keyword!=null &amp;&amp; !keyword.equals('')">
+	   			AND productNM like CONCAT('%',#{keyword},'%')
+	   		</if>
+	   		<if test="typeChar!=null &amp;&amp; !typeChar.equals('')">
+	   			AND productCharacter like CONCAT('%',#{typeChar},'%')
+	   		</if>
+	   		<if test="typeBrand!=null &amp;&amp; !typeBrand.equals('')">
+	   			AND productBrand like CONCAT('%',#{typeBrand},'%')
+	   		</if>
+	   		
+	   		<if test="productType!=null &amp;&amp; !productType.equals('')">
+	   			AND productType = #{productType}
+	   		</if>
+	   		
+   		</trim>
+   	</select>
+	
+	
+	<select id="ingreProduct" parameterType ="java.util.List" resultType="com.example.entity.Cosmetic">
+		select * from cosmetic where
+		<foreach collection="list" item="code" separator="or">
+	 		productID = #{code}
+		</foreach>
+		order by productReviewCnt DESC limit 5
+	</select>
+</mapper>

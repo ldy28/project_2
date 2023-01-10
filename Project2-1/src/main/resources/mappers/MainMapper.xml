@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.MainMapper">
+
+<!-- 메인 - 성분 랭킹 -->
+	<select id = "rankIngre" resultType="com.example.entity.Ingredient" parameterType="String">
+		select * from ingredient 
+		<choose>
+			<when test= 'type == "S"'>
+				where ingreSkinRanking != 0 order by ingreSkinRanking 
+			</when>
+			<when test= 'type == "C"'>
+				where ingreCreamRanking != 0 order by ingreCreamRanking 
+			</when>
+			<when test= 'type == "L"'>
+				where ingreLotionRanking != 0 order by ingreLotionRanking 
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 메인 - 화장품 랭킹 -->
+	<select id = "rankCos" resultType="com.example.entity.Cosmetic" parameterType="String">
+		select * from cosmetic where productType = #{type} and productRank != 0 order by productRank 
+		
+	</select>
+
+	<!--  회원가입 -->
+	<insert id="signInsert" parameterType="com.example.entity.member">
+  		insert into member(memId,memPw,memName, memPhone, memJoindate)values(
+  		#{memID}, #{memPw}, #{memName},#{memPhone},now())
+  	</insert>
+  	
+  	<!--  로그인 -->
+  	<select id="getLogin" resultType="com.example.entity.member" parameterType="com.example.entity.member">
+  		select * from member
+  		where memID=#{memID} and memPw=#{memPw} and memType != 'W'
+  	</select>
+  	
+  	<!-- 관리자 페이지 
+  	<select id="memberList" resultType="com.example.entity.member" parameterType="com.example.entity.Criteria">
+   		select * from member
+   		<choose>
+   			<when test="manager == 'memberlist'">
+   				where memType = 'U'
+   			</when>
+   			<when test="manager == 'recognize'">
+   				where memType = 'W'
+   			</when>
+   		</choose>
+   		 order by memJoinDate DESC limit #{pageStart}, #{perPageNum}
+   	</select>
+   	<select id="memberCount" resultType="int" parameterType="com.example.entity.Criteria">
+   		select count(*) from member
+   		<choose>
+   			<when test="manager == 'memberlist'">
+   				where memType = 'U'
+   			</when>
+   			<when test="manager == 'recognize'">
+   				where memType = 'W'
+   			</when>
+   		</choose>
+   	</select>
+   	
+   <delete id="memDelete" parameterType="String">
+   		delete from member where memID = #{memID}
+   </delete>
+   
+   <update id="memUpdate" parameterType="String">
+   		update member set memType="U" where memID = #{memID}
+   </update>
+  	-->
+  	
+</mapper>
+

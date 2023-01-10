@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" itemtype="http://schema.org/WebPage"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/img/my_img/">
+<link rel="icon" type="image/png" href="/assets/img/my_img/">
+<title>미정계수</title>
+<link rel="styleshgoogeet" type="text/css"
+	href="https://fonts.leapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+<link href="/assets/css/nucleo-icons.css" rel="stylesheet" />
+<link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
+<script src="https://kit.fontawesome.com/42d5adcbca.js"
+	crossorigin="anonymous"></script>
+<link
+	href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+	rel="stylesheet">
+<link id="pagestyle" href="/assets/css/material-kit.css?v=3.0.4"
+	rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/my.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script th:inline="javascript">
+	$(document).ready(function(){
+		mainIngre("S");
+		mainCos("S");
+	
+		var session = [[${session.mvo}]];
+		if(session == null){
+			location.href="/login.do";
+		}
+	});
+
+	function mainIngre(type){
+		$.ajax({
+			url : "/mainIngre",
+			data : {"type": type},
+			success : function(data){
+				var ingre1 = "";
+				var ingre2 = "";
+				var ingre3 = "";
+
+				$.each(data,function(index,obj){
+					if(index < 4){
+						ingre1 += '<div class="col-lg-3 col-sm-6">';
+						ingre1 += '<div class="card">';
+						ingre1 += '<div class="card-body">';
+						ingre1 += '<h5 class="card-title text-dark font-weight-bold">'+obj.ingreName+'</h5>';
+						ingre1 += '<p class="card-title">EWG : '+obj.ingreEwg+'</p>';
+						ingre1 += '<h6 class="card-text mb-2 text-muted">'+obj.ingreEngName+'</h6>';
+						// ingre1 += '<p>배합 목적 : <br>'+obj.ingreObj.replaceAll("|",",")+'</p>';
+						ingre1 += '<a href ="/ingreDetail?ingreCode='+obj.ingreCode+'" class="text-info text-sm icon-move-right">더보기 <iclass="fas fa-arrow-right text-xs ms-1"></i></a>';
+						ingre1 += '</div>';
+						ingre1 += '</div>';
+						ingre1 += '</div>';
+						if(index == 3){
+							$('.ingre1').html(ingre1);
+						}	
+					}else if (index < 8){
+						ingre2 += '<div class="col-lg-3 col-sm-6">';
+						ingre2 += '<div class="card">';
+						ingre2 += '<div class="card-body">';
+						ingre2 += '<h5 class="card-title text-dark font-weight-bold">'+obj.ingreName+'</h5>';
+						ingre2 += '<p class="card-title">EWG : '+obj.ingreEwg+'</p>';
+						ingre2 += '<h6 class="card-text mb-2 text-muted">'+obj.ingreEngName+'</h6>';
+						//ingre2 += '<p>배합 목적 : <br>'+obj.ingreObj.replaceAll("|",",")+'</p>';
+						ingre2 += '<a href ="/ingreDetail?ingreCode='+obj.ingreCode+'" class="text-info text-sm icon-move-right">더보기 <iclass="fas fa-arrow-right text-xs ms-1"></i></a>';
+						ingre2 += '</div>';
+						ingre2 += '</div>';
+						ingre2 += '</div>';
+						if(index == 7){
+							$('.ingre2').html(ingre2);
+						}
+					}else if (index < 12){
+						ingre3 += '<div class="col-lg-3 col-sm-6">';
+						ingre3 += '<div class="card">';
+						ingre3 += '<div class="card-body">';
+						ingre3 += '<h5 class="card-title text-dark font-weight-bold">'+obj.ingreName+'</h5>';
+						ingre3 += '<p class="card-title">EWG : '+obj.ingreEwg+'</p>';
+						ingre3 += '<h6 class="card-text mb-2 text-muted">'+obj.ingreEngName+'</h6>';
+						//ingre3 += '<p>배합 목적 : <br>'+obj.ingreObj.replaceAll("|",",")+'</p>';
+						ingre3 += '<a href ="/ingreDetail?ingreCode='+obj.ingreCode+'" class="text-info text-sm icon-move-right">더보기 <i class="fas fa-arrow-right text-xs ms-1"></i></a>';
+						ingre3 += '</div>';
+						ingre3 += '</div>';
+						ingre3 += '</div>';
+						if(index == 11){
+							$('.ingre3').html(ingre3);
+						}
+					}
+						
+					
+				});
+			}
+		})
+	}
+		
+	function mainCos(type){
+		$.ajax({
+			url : "/mainCos",
+			data : {"type": type},
+			success : function(data){
+				var cos1 = "";
+				var cos2 = "";
+				var cos3 = "";
+				$.each(data,function(index,obj){
+					if(index < 4){
+						cos1 += '<div class="col-lg-3 col-sm-6">';
+						cos1 += '<div class="card card-plain">';
+						cos1 += '<div class="card-header p-0 position-relative">';
+						cos1 += '<a class="d-block blur-shadow-image"> <img src="'+obj.productImg+'" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg" loading="lazy"></a>';
+						cos1 += '</div>';
+						cos1 += '<div class="card-body px-0">';
+						cos1 += '<h5><a href="/cosDetail?productID='+obj.productID+'" class="text-dark font-weight-bold">'+obj.productNM+'</a></h5>';
+						cos1 += '<p class:"multiline-ellipsis">'+obj.productBrand+'<br>'+obj.productCharacter.replaceAll("|",",")+'</p>';
+						cos1 += '<a href="/cosDetail?productID='+obj.productID+'" class="text-info text-sm icon-move-right">더보기 <i class="fas fa-arrow-right text-xs ms-1"></i></a>';
+						cos1 += '</div>';
+						cos1 += '</div>';
+						cos1 += '</div>';
+						if(index == 3){
+							$('.cos1').html(cos1);
+						}	
+					}else if (index < 8){
+						cos2 += '<div class="col-lg-3 col-sm-6">';
+						cos2 += '<div class="card card-plain">';
+						cos2 += '<div class="card-header p-0 position-relative">';
+						cos2 += '<a class="d-block blur-shadow-image"> <img src="'+obj.productImg+'" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg" loading="lazy"></a>';
+						cos2 += '</div>';
+						cos2 += '<div class="card-body px-0">';
+						cos2 += '<h5><a href="/cosDetail?productID='+obj.productID+'" class="text-dark font-weight-bold">'+obj.productNM+'</a></h5>';
+						cos2 += '<p class:"multiline-ellipsis">'+obj.productBrand+'<br>'+obj.productCharacter.replaceAll("|",",")+'</p>';
+						cos2 += '<a href="/cosDetail?productID='+obj.productID+'" class="text-info text-sm icon-move-right">더보기 <i class="fas fa-arrow-right text-xs ms-1"></i></a>';
+						cos2 += '</div>';
+						cos2 += '</div>';
+						cos2 += '</div>';
+						if(index == 7){
+							$('.cos2').html(cos2);
+						}
+					}else if (index < 12){
+						cos3 += '<div class="col-lg-3 col-sm-6">';
+						cos3 += '<div class="card card-plain">';
+						cos3 += '<div class="card-header p-0 position-relative">';
+						cos3 += '<a class="d-block blur-shadow-image"> <img src="'+obj.productImg+'" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg" loading="lazy"></a>';
+						cos3 += '</div>';
+						cos3 += '<div class="card-body px-0">';
+						cos3 += '<h5><a href="/cosDetail?productID='+obj.productID+'" class="text-dark font-weight-bold">'+obj.productNM+'</a></h5>';
+						cos3 += '<p class:"multiline-ellipsis">'+obj.productBrand+'<br>'+obj.productCharacter.replaceAll("|",",")+'</p>';
+						cos3 += '<a href="/cosDetail?productID='+obj.productID+'" class="text-info text-sm icon-move-right">더보기 <i class="fas fa-arrow-right text-xs ms-1"></i></a>';
+						cos3 += '</div>';
+						cos3 += '</div>';
+						cos3 += '</div>';
+						if(index == 11){
+							$('.cos3').html(cos3);
+						}
+					}
+				});
+			}
+		})
+	}
+  </script>
+</head>
+
+<body class="index-page bg-gray-200">
+	<th:block th:replace="th/header/header :: Tophd"></th:block>
+
+	<!-- start main text section -->
+	<header class="header-2">
+		<div class="page-header min-vh-75 relative main-background-image">
+			<span class="mask bg-gradient-blue opacity-4"></span>
+			<div class="container">
+				<div class="row">
+					<div class="text-center mx-auto">
+						<!-- <h2 class="text-dark">Ex-Main-Text</h2> -->
+						<h3>K-Beauty를 위한 고객 경험 데이터 기반</h3>
+
+<h2>트렌드분석 자동화 서비스   'UDF'를 만나다.</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- end main text section -->
+
+	<div id="product-top">
+		<div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
+			<!-- start ex top n-->
+			<section class="pt-sm-3">
+				<div id="carouselExampleControls" class="card-body-i carousel slide"
+					data-bs-ride="carousel">
+					<div class="carousel-inner">
+						<h2 class="mt-5 text-center">성분 Top n</h2>
+						<div class="mx-10">
+							<div class="row">
+								<div class="col"></div>
+								<div class="col-6 text-center">
+									<button type="button"
+										class="btn bg-gradient-blue w-20 my-4 mb-2 bg-gradient-blue-button"
+										th:onclick="mainIngre('S')">스킨</button>
+									<button type="button"
+										class="btn bg-gradient-blue w-20 my-4 mb-2 bg-gradient-blue-button"
+										th:onclick="mainIngre('C')">크림</button>
+									<button type="button"
+										class="btn bg-gradient-blue w-20 my-4 mb-2 bg-gradient-blue-button"
+										th:onclick="mainIngre('L')">로션</button>
+								</div>
+								<div class="col"></div>
+							</div>
+						</div>
+						<div class="carousel-item active py-4">
+							<div class="container">
+								<div class="row ingre1"></div>
+							</div>
+						</div>
+
+						<div class="carousel-item py-4 pg2">
+							<div class="container">
+								<div class="row ingre2"></div>
+							</div>
+						</div>
+
+						<div class="carousel-item py-4 pg3">
+							<div class="container">
+								<div class="row ingre3"></div>
+							</div>
+						</div>
+
+						<button class="carousel-control-prev" type="button"
+							data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+
+						<button class="carousel-control-next" type="button"
+							data-bs-target="#carouselExampleControls" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>
+
+					</div>
+				</div>
+			</section>
+			<!-- end ex top n-->
+
+			<!-- start ingredient top n-->
+			<section class="pt-sm-5">
+				<div id="carouselExampleIndicators"
+					class="card-body-i carousel slide card" data-bs-ride="true">
+					<div class="carousel-inner">
+						<h2 class="mt-5 text-center">제품 Top n</h2>
+						<div class="mx-10">
+							<div class="row">
+								<div class="col"></div>
+								<div class="col-6 text-center">
+									<button type="button"
+										class="btn bg-gradient-blue w-20 my-4 mb-2 bg-gradient-blue-button"
+										th:onclick="mainCos('S')">스킨</button>
+									<button type="button"
+										class="btn bg-gradient-blue w-20 my-4 mb-2 bg-gradient-blue-button"
+										th:onclick="mainCos('C')">크림</button>
+									<button type="button"
+										class="btn bg-gradient-blue w-20 my-4 mb-2 bg-gradient-blue-button"
+										th:onclick="mainCos('L')">로션</button>
+								</div>
+								<div class="col"></div>
+							</div>
+						</div>
+						<div class="carousel-item active">
+							<div class="container">
+								<div class="row cos1 py-4"></div>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<div class="container">
+								<div class="row cos2 py-4"></div>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<div class="container">
+								<div class="row cos3 py-4"></div>
+							</div>
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button"
+						data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button"
+						data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+			</section>
+			<!-- end ingredient top n-->
+
+			<!-- start card section -->
+			<!-- <section class="my-5 py-5">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-5 ms-auto me-auto p-lg-4 mt-lg-0 mt-4">
+							<div class="rotating-card-container">
+								<div class="card card-rotate card-background card-background-mask-primary shadow-dark mt-md-0 mt-5">
+									<div class="front front-background card-background-img-1-f">
+										<div class="card-body py-7 text-center">
+											<i class="material-icons text-white text-4xl my-3">🥕</i>
+											<h3 class="text-white">
+												More about us
+											</h3>
+											<p class="text-white opacity-8">"Franz jagt im komplett
+												verwahrlosten Taxi quer durch Bayern.Franz jagt im komplett
+												verwahrlosten Taxi quer durch Bayern."</p>
+										</div>
+									</div>
+									<div class="back back-background card-background-img-1-b">
+										<div class="card-body pt-7 text-center">
+											<h3 class="text-white">Discover More</h3>
+											<p class="text-white opacity-8">"Franz jagt im komplett
+												verwahrlosten Taxi quer durch Bayern.Franz jagt im komplett
+												verwahrlosten Taxi quer durch Bayern."</p>
+											<a href=".//sections/page-sections/hero-sections.html"
+												target="_blank"
+												class="btn btn-white btn-sm w-50 mx-auto mt-3">Go to
+												other page</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-7">
+						
+						</div>
+					</div>
+				</div>
+			</section> -->
+			<!-- end card section -->
+		</div>
+	</div>
+
+	<!-- start footer -->
+	<th:block th:replace="th/header/footer :: Botft"></th:block>
+	<!-- end footer -->
+
+	<!--   Core JS Files   -->
+	<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+	<script src="/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+	<script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+	<!--  Plugin for TypedJS, full documentation here: https://github.com/inorganik/CountUp.js -->
+	<script src="/assets/js/plugins/countup.min.js"></script>
+	<script src="/assets/js/plugins/choices.min.js"></script>
+	<script src="/assets/js/plugins/prism.min.js"></script>
+	<script src="/assets/js/plugins/highlight.min.js"></script>
+	<!--  Plugin for Parallax, full documentation here: https://github.com/dixonandmoe/rellax -->
+	<script src="/assets/js/plugins/rellax.min.js"></script>
+	<!--  Plugin for TiltJS, full documentation here: https://gijsroge.github.io/tilt.js/ -->
+	<script src="/assets/js/plugins/tilt.min.js"></script>
+	<!--  Plugin for Selectpicker - ChoicesJS, full documentation here: https://github.com/jshjohnson/Choices -->
+	<script src="/assets/js/plugins/choices.min.js"></script>
+	<!--  Plugin for Parallax, full documentation here: https://github.com/wagerfield/parallax  -->
+	<script src="/assets/js/plugins/parallax.min.js"></script>
+	<!-- Control Center for Material UI Kit: parallax effects, scripts for the example pages etc -->
+	<!--  Google Maps Plugin    -->
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
+	<script src="/assets/js/material-kit.min.js?v=3.0.4"
+		type="text/javascript"></script>
+	<script type="text/javascript">
+    if (document.getElementById('state1')) {
+      const countUp = new CountUp('state1', document.getElementById("state1").getAttribute("countTo"));
+      if (!countUp.error) {
+        countUp.start();
+      } else {
+        console.error(countUp.error);
+      }
+    }
+    if (document.getElementById('state2')) {
+      const countUp1 = new CountUp('state2', document.getElementById("state2").getAttribute("countTo"));
+      if (!countUp1.error) {
+        countUp1.start();
+      } else {
+        console.error(countUp1.error);
+      }
+    }
+    if (document.getElementById('state3')) {
+      const countUp2 = new CountUp('state3', document.getElementById("state3").getAttribute("countTo"));
+      if (!countUp2.error) {
+        countUp2.start();
+      } else {
+        console.error(countUp2.error);
+      };
+    }
+  </script>
+</body>
+
+</html>

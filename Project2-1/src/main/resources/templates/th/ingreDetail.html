@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" itemtype="http://schema.org/WebPage"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="apple-touch-icon" sizes="76x76"
+	href="../assets/img/apple-icon.png">
+<link rel="icon" type="image/png" href="/assets/img/favicon.png">
+<title>UNDEFINED</title>
+<!--     Fonts and icons     -->
+<link rel="stylesheet" type="text/css"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+<!-- Nucleo Icons -->
+<link href="/assets/css/nucleo-icons.css" rel="stylesheet" />
+<link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
+<!-- Font Awesome Icons -->
+<script src="https://kit.fontawesome.com/42d5adcbca.js"
+	crossorigin="anonymous"></script>
+<!-- Material Icons -->
+<link
+	href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+	rel="stylesheet">
+<!-- CSS Files -->
+<link id="pagestyle" href="/assets/css/material-kit.css?v=3.0.4"
+	rel="stylesheet" />
+<link id="" href="/assets/css/my.css" rel="stylesheet" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script th:inline="javascript">
+	
+</script>
+
+<style type="text/css">
+.ewgImage {
+	position: relative;
+	justify-content: center;
+}
+
+.ewgImage .ewgText {
+	position: absolute;
+	top: 31%;
+	left: 48%;
+	transform: translate(-50%, -50%);
+	color: white;
+	text-align: center;
+}
+</style>
+
+</head>
+
+<body class="blog-author bg-gray-200">
+	<!-- Navbar -->
+	<th:block th:replace="th/header/header :: Tophd"></th:block>
+	<!-- -------- START HEADER 4 w/ search book a ticket form ------- -->
+	<header class="header-2">
+		<div class="page-header min-vh-45 relative main-background-image">
+			<span class="mask bg-gradient-blue opacity-4"></span>
+		</div>
+	</header>
+	<!-- -------- END HEADER 4 w/ search book a ticket form ------- -->
+	<div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n10 mb-4 ">
+		<!-- START Testimonials w/ user image & text & info -->
+		<section class="mt-2 mb-4">
+			<div class="card card-body-b">
+				<div class="card card-body-i">
+					<h4 class="text-center" th:text="${ingre.ingreName}"></h4>
+					<h5 class="text-center in-name" th:text="${ingre.ingreEngName}"></h5>
+				</div>
+			</div>
+		</section>
+		<section>
+			<!-- Start card-ingre-1 -->
+			<div class="row">
+				<div class="col-xxl-5 col-md-6 mb-4">
+					<div class="card card-body-b">
+						<h3 class="card-title">INFO</h3>
+						<div class="card-body-i row">
+							<div class="col-3 card-body-info text-center mb-3">
+								<h6 class="card-body-info-center">한글명</h6>
+							</div>
+							<div class="col-9 card-body-info text-center mb-3">
+								<h6 class="card-body-info-center" th:text="${ingre.ingreName}"></h6>
+							</div>
+							<div class="col-3 card-body-info text-center mb-3">
+								<h6 class="card-body-info-center">INCI</h6>
+							</div>
+							<div class="col-9 card-body-info text-center mb-3">
+								<h6 class="card-body-info-center"
+									th:text="${ingre.ingreEngName}"></h6>
+							</div>
+
+							<div class="col-3 card-body-info text-center mb-3">
+								<h6 class="card-body-info-center mt-2">Cas</h6>
+							</div>
+							<div class="col-9 card-body-info text-center mb-3">
+								<h6 class="card-body-info-center" th:text="${ingre.ingreCas}"
+									th:if="${!ingre.ingreCas.toString().equals('None')}"></h6>
+								<h6 class="card-body-info-center" th:text="'데이터없음'"
+									th:if="${ingre.ingreCas.toString().equals('None')}"></h6>
+							</div>
+							<div class="col-3 card-body-info text-center mb-3">
+								<h6 class="card-body-info-center">구명칭</h6>
+							</div>
+							<div class="col-9 card-body-info text-center mb-3">
+								<h6 class="card-body-info-center"
+									th:text="${ingre.ingreOldName}"
+									th:if="${!ingre.ingreOldName.toString().equals('None')}"></h6>
+								<h6 class="card-body-info-center" th:text="'데이터없음'"
+									th:if="${ingre.ingreOldName.toString().equals('None')}"></h6>
+							</div>
+							<div class="col-3 card-body-info text-center mb-3">
+								<h6 class="card-body-info-center">EWG</h6>
+							</div>
+							<div class="col-9 card-body-info text-center mb-3">
+								<div class="ewgImage">
+									<th:block
+										th:switch="${#strings.substring(ingre.ingreEwg, 0, 1)}">
+										<img th:case='N' alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/JS.png" width="50" height="50">
+										<img th:case="1" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg1.png" width="50" height="50">
+										<img th:case="2" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg1.png" width="50" height="50">
+										<img th:case="3" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg2.png" width="50" height="50">
+										<img th:case="4" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg2.png" width="50" height="50">
+										<img th:case="5" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg2.png" width="50" height="50">
+										<img th:case="6" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg2.png" width="50" height="50">
+										<img th:case="7" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg3.png" width="50" height="50">
+										<img th:case="8" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg3.png" width="50" height="50">
+										<img th:case="9" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg3.png" width="50" height="50">
+										<img th:case="10" alt="/assets/img/my_img/JS.png"
+											src="/assets/img/my_img/ewg3.png" width="50" height="50">
+									</th:block>
+									<!-- 									<h6 class="card-body-info-center ewgText" th:text="${ingre.ingreEwg}"></h6> -->
+									<div>
+										<h6 class="ewgText" th:text="${ingre.ingreEwg}"
+											th:if="${!ingre.ingreEwg.toString().equals('None')}"></h6>
+									</div>
+								</div>
+							</div>
+							<div class="col-3 card-body-info text-center mb-3">
+								<h6 class="card-body-info-center">EWG 데이터</h6>
+							</div>
+							<div class="col-9 card-body-info text-center mb-3">
+								<h6 class="card-body-info-center"
+									th:text="${ingre.ingreEwgData}"
+									th:if="${!ingre.ingreEwgData.toString().equals('None')}"></h6>
+								<h6 class="card-body-info-center" th:text="'데이터없음'"
+									th:if="${ingre.ingreEwgData.toString().equals('None')}"></h6>
+							</div>
+							<div class="col-3 card-body-info text-center mb-3">
+								<h6 class="card-body-info-center">배합 목적</h6>
+							</div>
+							<div class="col-9 card-body-info text-center mb-3">
+								<h6 class="card-body-info-center" th:text="${ingre.ingreObj}"
+									th:if="${!ingre.ingreObj.toString().equals('None')}"></h6>
+								<h6 class="card-body-info-center" th:text="'데이터없음'"
+									th:if="${ingre.ingreObj.toString().equals('None')}"></h6>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- End card-ingre-1 -->
+
+				<!-- Start card-ingre-2 -->
+				<div class="col-xxl-4 col-md-6 mb-4">
+					<div class="card">
+						<div class="card-body-b">
+							<h3 class="card-title">Review Keyword</h3>
+							<div class="card-body-i">
+								<!-- image 사이즈 동적이게 변경 해야함 -->
+								<div class="r-key-img">
+									<img onerror="this.src='/assets/img/my_img/00.jpeg'"
+										th:src="@{${'/assets/img/IngreWord/'+ ingre.ingreCode +'.png'}}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End card-ingre-2 -->
+
+				<!-- Start card-ingre-2 -->
+				<div class="col-xxl-3 col-xl-12 mb-4">
+					<div class="card">
+						<div class="card-body-b">
+							<h3 class="card-title">피부타입별</h3>
+							<div
+								class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+								<i class="bi bi-cart"></i>
+							</div>
+							<div class="card-body-i">
+								<div class="row">
+									<div class="card-body-i card-body-info text-center mb-2">
+										<h6 class="card-body-info-center">
+											<span>건성</span> |
+											<th:block th:switch="${ingre.ingreDryScore}">
+												<span th:case="1" style="color: green;">추천</span>
+												<span th:case="2" style="color: red;">비추천</span>
+												<span th:case="0">등급없음</span>
+											</th:block>
+										</h6>
+									</div>
+								</div>
+								<div class="row">
+									<div class="card-body-i card-body-info text-center mb-2">
+										<h6 class="card-body-info-center">
+											<span>지성</span> |
+											<th:block th:switch="${ingre.ingreOilScore}">
+												<span th:case="1" style="color: green;">추천</span>
+												<span th:case="2" style="color: red;">비추천</span>
+												<span th:case="0">등급없음</span>
+											</th:block>
+										</h6>
+									</div>
+								</div>
+								<div class="row">
+									<div class="card-body-i card-body-info text-center mb-2">
+										<h6 class="card-body-info-center">
+											<span>민감성</span> |
+											<th:block th:switch="${ingre.ingreSensitiveScore}">
+												<span th:case="1" style="color: green;">추천</span>
+												<span th:case="2" style="color: red;">비추천</span>
+												<span th:case="0">등급없음</span>
+											</th:block>
+										</h6>
+									</div>
+								</div>
+								<div class="row">
+									<div class="card-body-i card-body-info text-center mb-2">
+										<h6 class="card-body-info-center">
+											<span>알러지</span> |
+											<th:block th:switch="${ingre.ingreAllegyScore}">
+												<span th:case="1" style="color: red;">주의성분</span>
+												<span th:case="0" style="color: green;">주의성분 없음</span>
+											</th:block>
+										</h6>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End card-ingre-2 -->
+				<div class="card card-body-i blur shadow-blur mx-3 mx-md-4 mb-4">
+          <section class="py-3 ps">
+            <h4 class="mb-5 text-center card" th:text="|${ingre.ingreName} 이 들어간 제품|"></h4>
+            <div class="container card py-5 ps-sm-5 px-sm-5">
+				<div class="row">
+					<div class="col-lg-3 col-sm-6" th:each="cos: ${cosList}">
+						<div class="card card-plain" th>
+							<div class="card-header p-0 position-relative">
+								<a class="d-block blur-shadow-imag"
+									th:href="@{/cosDetail(productID=${cos.productID})}"> <img
+									th:src="${cos.productImg}"
+									class="shadow border-radius-lg product-img" loading="lazy">
+								</a>
+							</div>
+
+							<div class="card-body px-0">
+								<h5>
+									<a th:href="@{/cosDetail(productID=${cos.productID})}"
+										class="text-dark font-weight-bold" th:text="${cos.productNM}"></a>
+								</h5>
+								<p th:text="${#strings.replace(cos.productCharacter,'|',',')}"></p>
+								<p th:text="${cos.productBrand}"></p>
+								<p th:text="${cos.productStar}"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
+          </section>
+        </div>
+
+				<!-- -------- START FOOTER 5 w/ DARK BACKGROUND ------- -->
+				<footer class="footer pt-5 mt-5">
+					<div class="container">
+						<div class="text-center">
+							<p class="text-dark my-4 text-sm font-weight-normal">
+								All rights reserved. Copyright ©
+								<script>
+									document.write(new Date().getFullYear())
+								</script>
+								🥕 <a href="" target="_blank">Some Where</a>.
+							</p>
+						</div>
+					</div>
+				</footer>
+			</div>
+	</div>
+	<!-- -------- END FOOTER 5 w/ DARK BACKGROUND ------- -->
+	<!--   Core JS Files   -->
+	<script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
+	<script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+	<script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+	<!--  Plugin for Parallax, full documentation here: https://github.com/wagerfield/parallax  -->
+	<script src="../assets/js/plugins/parallax.min.js"></script>
+	<!-- Control Center for Material UI Kit: parallax effects, scripts for the example pages etc -->
+	<!--  Google Maps Plugin    -->
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
+	<script src="../assets/js/material-kit.min.js?v=3.0.4"
+		type="text/javascript"></script>
+</body>
+
+</html>

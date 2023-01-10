@@ -1,0 +1,341 @@
+<!--
+=========================================================
+* Material Kit 2 - v3.0.4
+=========================================================
+
+* Product Page:  https://www.creative-tim.com/product/material-kit 
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="apple-touch-icon" sizes="76x76"
+	href="../assets/img/apple-icon.png">
+<link rel="icon" type="image/png" href="/assets/img/favicon.png">
+<title>Material Kit 2 by Creative Tim</title>
+<!--     Fonts and icons     -->
+<link rel="stylesheet" type="text/css"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+<!-- Nucleo Icons -->
+<link href="/assets/css/nucleo-icons.css" rel="stylesheet" />
+<link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
+<!-- Font Awesome Icons -->
+<script src="https://kit.fontawesome.com/42d5adcbca.js"
+	crossorigin="anonymous"></script>
+<!-- Material Icons -->
+<link
+	href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+	rel="stylesheet">
+<!-- CSS Files -->
+<link id="pagestyle" href="/assets/css/material-kit.css?v=3.0.4"
+	rel="stylesheet" />
+<link id="" href="/assets/css/my.css" rel="stylesheet" />
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script th:inline="javascript">
+  	$(document).ready(function(){
+  		// 페이지 번호를 클릭했을때 감지
+  		// pagination 아래 a태그를 클릭 했을때
+  		
+  		
+  		
+  		var btnid = $('input[name=manager]').val();
+  		if(btnid == 'recognize'){
+  			$('#recognize').addClass("active");
+
+
+  		}else{
+  			$('#memberlist').addClass("active");
+  		}
+  		console.log(btnid);
+  		
+  		
+  		
+  		$('.pagination-info a').click(function(e){
+  			// e 는 a태그 /a태그의 동작을 삭제함
+  			e.preventDefault();
+  			var page = $(this).attr('href');
+  			document.frm.page.value=page; // name=frm 을 가지는 폼에 name=page인 value 값을 page 로 바꾼다
+  			document.frm.submit(); // 전송
+  		});
+  		
+  		$('.filter_mem a').click(function(e){
+  			e.preventDefault();
+  			var manager = $(this).attr("id");
+  			console.log(manager);
+  			
+  			$('input[name=manager]').attr('value',manager);
+  			
+  			document.frm.page.value=1; // name=frm 을 가지는 폼에 name=page인 value 값을 page 로 바꾼다
+  			document.frm.submit();
+  		});
+  		
+  		
+  	});
+  	function memEdit(memID){
+		var check = confirm("승인하시겠습니까");
+		if(check == true){
+			$('input[name=memid]').attr("value",memID);
+			$('input[name=btnVal]').attr("value","edit");
+			
+			
+			$("#frm").submit();
+		}else{
+			return false;
+		}
+	}
+	
+	function memDelete(memID){
+		var check2 = confirm("추방하시겠습니까");
+		if(check2 == true){
+			$('input[name=memid]').attr("value",memID);
+			$('input[name=btnVal]').attr("value","reject");
+			
+			
+			$("#frm").submit();
+		}else{
+			return false;
+		}
+	}
+  	
+  	
+  	</script>
+</head>
+
+<body class="blog-author bg-gray-200">
+	<th:block th:replace="th/header/header :: Tophd"></th:block>
+	<!-- -------- START HEADER 4 w/ search book a ticket form ------- -->
+	<header>
+		<div class="page-header min-height-300 relative main-background-image"
+			loading="lazy">
+			<span class="mask bg-gradient-blue opacity-4"></span>
+		</div>
+	</header>
+	<!-- -------- END HEADER 4 w/ search book a ticket form ------- -->
+	<div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n8 mb-4">
+		<!-- START Testimonials w/ user image & text & info -->
+		<!-- <section class="py-sm-7 py-5 position-relative">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 mx-auto">
+            <div class="mt-n8 mt-md-n9 text-center">
+              <img class="avatar avatar-xxl shadow-xl position-relative z-index-2" src="../assets/img/bruce-mars.jpg"
+                alt="bruce" loading="lazy">
+            </div>
+            <div class="row py-5">
+              <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mx-auto">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <h3 class="mb-0">Michael Roven</h3>
+                  <div class="d-block">
+                    <button type="button" class="btn btn-sm btn-outline-info text-nowrap mb-0">Follow</button>
+                  </div>
+                </div>
+                <div class="row mb-4">
+                  <div class="col-auto">
+                    <span class="h6">323</span>
+                    <span>Posts</span>
+                  </div>
+                  <div class="col-auto">
+                    <span class="h6">3.5k</span>
+                    <span>Followers</span>
+                  </div>
+                  <div class="col-auto">
+                    <span class="h6">260</span>
+                    <span>Following</span>
+                  </div>
+                </div>
+                <p class="text-lg mb-0">
+                  Decisions: If you can’t decide, the answer is no.
+                  If two equally difficult paths, choose the one more
+                  painful in the short term (pain avoidance is creating
+                  an illusion of equality). Choose the path that leaves
+                  you more equanimous. <br><a href="javascript:;" class="text-info icon-move-right">More about me
+                    <i class="fas fa-arrow-right text-sm ms-1"></i>
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
+		<!-- END Testimonials w/ user image & text & info -->
+		<!-- START Blogs w/ 4 cards w/ image & text & link -->
+		<section class="py-3">
+
+
+			<div class="container">
+				<div class="row">
+					<div class="col"></div>
+					<div class="text-center filter_mem col-6">
+						<a href="#" id="recognize"
+							class="btn bg-gradient-blue w-20 my-4 mb-2 bg-gradient-blue-button"
+							role="button" aria-pressed="true">가입 승인</a> <a href="#"
+							id="memberlist"
+							class="btn bg-gradient-blue w-20 my-4 mb-2 bg-gradient-blue-button"
+							role="button" aria-pressed="true">회원 목록</a>
+
+					</div>
+					<div class="col"></div>
+
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="table-responsive">
+								<table class="table align-items-center mb-0">
+									<thead>
+										<tr>
+											<th
+												class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">아이디</th>
+											<th
+												class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">이름</th>
+											<th
+												class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">전화번호</th>
+											<th
+												class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">승인</th>
+
+
+											<th class="text-secondary opacity-7"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="member : ${memberList}">
+											<td class="col-lg-1">
+												<div class="d-flex px-2 py-1">
+
+													<div class="d-flex flex-column justify-content-center">
+														<h6 class="mb-0 text-xs" th:text="${member.memID}"></h6>
+														<p class="text-xs text-secondary mb-0"></p>
+													</div>
+												</div>
+											</td>
+
+											<td class="col-lg-7">
+												<p class="text-xs font-weight-bold mb-0"
+													th:text="${member.memName}"></p>
+
+											</td>
+
+											<td class="align-middle text-center text-sm"
+												th:text="${member.memPhone}"><span
+												class="badge badge-sm badge-success"></span></td>
+
+
+
+											<td class="align-middle text-center mb-0 memClick"><th:block
+													th:if="${member.memType == 'W'}">
+													<a th:memID="${member.memID}"
+														th:onclick="memEdit(this.getAttribute('memID'))"
+														class="btn btn-success btn-sm active mb-0" role="button"
+														aria-pressed="true">승인</a>
+													<a th:memID="${member.memID}"
+														th:onclick="memDelete(this.getAttribute('memID'))"
+														class="btn btn-danger btn-sm active mb-0" role="button"
+														aria-pressed="true">거부</a>
+												</th:block> <th:block th:if="${member.memType == 'U'}">
+													<a th:memID="${member.memID}"
+														th:onclick="memDelete(this.getAttribute('memID'))"
+														class="btn btn-danger btn-sm active mb-0" role="button"
+														aria-pressed="true">탈퇴</a>
+												</th:block></td>
+										</tr>
+
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+					</div>
+
+					<!-- https://search.shopping.naver.com/search/category/{destCategory}?catId=50000440&frm=NVSHMDL&origQuery&pagingIndex={startpage}&pagingSize=40&productSet=model&query&sort=review_rel&timestamp=&viewType=list -->
+					<!-- <div class="col-lg-3 col-md-12 col-12">
+            <div class="card card-blog card-background cursor-pointer">
+              <div class="full-background" style="background-image: url('../assets/img/examples/blog2.jpg')"
+              loading="lazy"></div>
+              <div class="card-body">
+                <div class="content-left text-start my-auto py-4">
+                  <h2 class="card-title text-white">Flexible work hours</h2>
+                  <p class="card-description text-white">Rather than worrying about switching offices every couple
+                    years, you stay in the same place.</p>
+                    <a href="javascript:;" class="text-white text-sm icon-move-right">Read More
+                      <i class="fas fa-arrow-right text-xs ms-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div> -->
+				</div>
+				<form id="frm" name="frm" th:action="@{/memberList.do}"
+					method="post">
+					<ul class="pagination pagination-info justify-content-center mt-5">
+						<li class="page-item" th:if="${pageMaker.prev}"><a
+							class="page-link" th:href="@{${pageMaker.startPage-1}}"
+							aria-label="Previous"> <span aria-hidden="true"><i
+									class="ni ni-bold-left" aria-hidden="true"></i></span>
+						</a></li>
+						<th:block
+							th:each="pageNum:${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+							<li class="page-item active"
+								th:if="${pageMaker.cri.page == pageNum}"><a
+								class="page-link" th:href="@{${pageNum}}" th:text="${pageNum}"></a>
+							</li>
+							<li class="page-item"
+								th:unless="${pageMaker.cri.page == pageNum}"><a
+								class="page-link" th:href="@{${pageNum}}" th:text="${pageNum}"></a>
+							</li>
+
+
+						</th:block>
+						<li class="page-item" th:if="${pageMaker.next}"><a
+							class="page-link" th:href="@{${pageMaker.endPage+1}}"
+							aria-label="Next"> <span aria-hidden="true"><i
+									class="ni ni-bold-right" aria-hidden="true"></i></span>
+						</a></li>
+					</ul>
+					<input type="hidden" name="page" th:value="${pageMaker.cri.page}">
+
+
+					<input type="hidden" name="memid" th:value="${pageMaker.cri.memid}">
+					<input type="hidden" name="btnVal"
+						th:value="${pageMaker.cri.btnVal}"> <input type="hidden"
+						name="manager" th:value="${pageMaker.cri.manager}">
+
+
+
+
+				</form>
+			</div>
+		</section>
+		<!-- END Blogs w/ 4 cards w/ image & text & link -->
+	</div>
+
+	<!-- -------- START FOOTER 5 w/ DARK BACKGROUND ------- -->
+	<!-- start footer -->
+	<th:block th:replace="th/header/footer :: Botft"></th:block>
+	<!-- end footer -->
+	<!-- -------- END FOOTER 5 w/ DARK BACKGROUND ------- -->
+	<!--   Core JS Files   -->
+	<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+	<script src="/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+	<script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+	<!--  Plugin for Parallax, full documentation here: https://github.com/wagerfield/parallax  -->
+	<script src="/assets/js/plugins/parallax.min.js"></script>
+	<!-- Control Center for Material UI Kit: parallax effects, scripts for the example pages etc -->
+	<!--  Google Maps Plugin    -->
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
+	<script src="/assets/js/material-kit.min.js?v=3.0.4"
+		type="text/javascript"></script>
+</body>
+
+</html>

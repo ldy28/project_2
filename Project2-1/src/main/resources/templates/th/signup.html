@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원가입화면</title>
+
+<link id="pagestyle" href="../assets/css/material-kit.css?v=3.0.4"
+	rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/my.css">
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script th:inline="javascript">
+	//가입버튼 눌렀을때 확인
+	function fn_submit() {
+		var pwdval = $('#memPw').val();
+		var pwdokval = $('#memPwcheck').val();
+		// 최소 8자리에 숫자, 문자, 특수문자 각 1개 이상 포함
+		var pwdcheck = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
+		var idval = $('#memID').val();
+		// 이메일 형식 입력
+		var idvalcheck = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+		// 이름 정규식
+		var nameJ = /^[a-zA-Z가-힣]+$/;
+		var nameJval = $('#memName').val();
+		// 휴대폰 정규식
+		var PhoneC = /^\d{2,3}-\d{3,4}-\d{4}$/;
+		var Phoneval = $('#memPhone').val();
+
+		var f = document.frm;
+
+		if (f.memID.value == "") {
+			swal.fire({
+				html: "아이디를 입력해주세요.",
+				icon: "warning",
+				showCancleButton: true,
+				});
+			f.memID.focus();
+			return false;
+		}
+		if (!idvalcheck.test(idval) || idval.length < 6) {
+			swal.fire({
+				html: "아이디를 이메일 형식으로 입력해주세요.",
+				icon: "warning",
+				showCancleButton: true,
+				});
+			$('#memID').focus()
+			return false
+		}
+		if (f.chk.value == "0") {
+			$('#memID').css("color", "red");
+			swal.fire({
+				html: "아이디 중복 체크를 해주세요.",
+				icon: "warning",
+				showCancleButton: true,
+				});
+			return false;
+		}
+
+		if (f.memPw.value == "") {
+			swal.fire({
+				html: "암호를 입력해주세요.",
+				icon: "warning",
+				showCancleButton: true,
+				});
+			f.memPw.focus();
+			return false;
+		}
+		if (!pwdcheck.test(pwdval) || f.memPw.length < 8) {
+			console.log(pwdval)
+			swal.fire({
+				html: "비밀번호는 최소 8자리에 숫자, 문자, 특수문자 각 1개 이상 포함해주세요.",
+				icon: "warning",
+				showCancleButton: true,
+				});
+			$('#memPw').focus()
+			return false;
+		}
+		if(f.memPw.value!=f.memPwcheck.value){
+			console.log("확인", f.memPw.value);
+			console.log("확인", f.memPwcheck.value);
+			console.log(pwdval)
+			swal.fire({
+				html: "비밀번호가 일치하지 않습니다",
+				icon: "warning",
+				showCancleButton: true,
+				});
+			f.memPw.focus();
+			return false;				
+		}
+		if (f.memName.value == "") {
+			swal.fire({
+				html: "이름을 입력해주세요",
+				icon: "warning",
+				showCancleButton: true,
+				});
+			f.memName.focus();
+			return false;
+		}
+		if (!nameJ.test(nameJval)) {
+			swal.fire({
+				html: "이름을 한글이나 영어로 입력해주세요.",
+				icon: "warning",
+				showCancleButton: true,
+				});
+			$('#memName').focus()
+			return false
+		}
+		if (!PhoneC.test(Phoneval)) {
+			swal.fire({
+				html: "전화번호를 010-XXXX-XXXX 입력해주세요.",
+				icon: "warning",
+				showCancleButton: true,
+				});
+			$('#memPhone').focus()
+			return false
+		}
+		f.submit();
+		swal.fire({
+			title: "회원가입이 완료됐습니다.",
+			html: "회원가입 승인까지 1~2일 걸립니다.<br> 회원가입 문의는 서버관리실 062-xxx-xxxx로 연락주세요.",
+			icon: "warning",
+			showCancleButton: true,
+			});
+	}
+
+	function idCheck(data) {
+		console.log(data);
+		if (data.memID == 'null') {
+			$('#idResult').html("사용가능한 아이디입니다.");
+			$('#idResult').css("color", "blue");
+			$('.join').removeAttr('readonly');
+			return frm.chk.value = "1"
+		} else {
+			$('#idResult').html("사용이 불가능한 아이디입니다.");
+			$('#idResult').css("color", "red");
+		}
+	}
+
+	function loadLogin() {
+		location.href = "/login.do"
+	}
+</script>
+</head>
+<body class="sign-in-basic font-my">
+	<div class="page-header login-bg align-items-start min-vh-100">
+		<span class="mask bg-gradient-blue opacity-6"></span>
+		<div class="container my-auto">
+			<div class="row">
+				<div class="col-lg-4 col-md-8 col-12 mx-auto">
+					<div class="card z-index-0 fadeIn3 fadeInBottom">
+						<div
+							class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+							<div
+								class="bg-gradient-blue shadow-dark border-radius-lg py-3 pe-1">
+								<h4 class="text-white text-center mt-2 mb-0 font-w-6 font-size">환영합니다!</h4>
+
+							</div>
+						</div>
+						<div class="card-body">
+							<form method="post" action="signup.do" name="frm">
+								<input type="hidden" name="chk" th:value=0>
+								<div class="row">
+									<div class="col-8">
+										<div class="input-group input-group-outline mt-3">
+											<input type="email" class="form-control" id="memID"
+												name="memID" placeholder="Email" />
+										</div>
+									</div>
+									<div class="col-4">
+										<button
+											class="btn-sign-up w-100 btn bg-gradient-blue bg-gradient-blue-button mt-3 mb-2"
+											id="idCheck" type="button" onclick="fn_idcheck">중복확인</button>
+									</div>
+									<span id="idResult" class="idresult text-center"></span>
+								</div>
+								<div class="input-group input-group-outline mb-3">
+									<input oninput="checkmemPw()" class="form-control join"
+										type="password" id="memPw" name="memPw" size="20"
+										placeholder="Password" required />
+								</div>
+								<div class="input-group input-group-outline mb-3">
+									<input type="password" id="memPwcheck" name="memPwcheck"
+										class="form-control join" size="20"
+										placeholder="Password Confirm" required />
+								</div>
+								<div class="input-group input-group-outline mb-3">
+									<input type="text" id="memName" name="memName"
+										class="form-control join" placeholder="Name" size="20" />
+								</div>
+								<div class="input-group input-group-outline mb-3">
+									<input type="text" id="memPhone" name="memPhone"
+										class="form-control join" placeholder="010-xxxx-xxxx"
+										size="20" />
+								</div>
+								<div class="text-center">
+									<button
+										class="btn-sign-up my-3 w-40 btn bg-gradient-blue w-20 bg-gradient-blue-button"
+										type="button" onclick="loadLogin()">Login</button>
+									<button
+										class="btn-sign-up my-3 w-40 btn bg-gradient-blue w-20 bg-gradient-blue-button"
+										type="button" onclick="fn_submit();">SignUp</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$('#idCheck').on('click', function() {
+		var memID = $('#memID').val();
+		console.log(memID);
+		$.ajax({
+			url : "idCheck.do",
+			data : {
+				memID : memID
+			},
+			method : "POST",
+			dataType : "json",
+			success : idCheck,
+			error : function(e) {
+				console.log(e);
+				console.log("통신실패");
+			}
+
+		});
+	})
+</script>
+</html>
